@@ -1,0 +1,153 @@
+*,
+*::after,
+*::before {
+  /* display: flex; */
+  font-family: Dosis;
+  font-size: 50px;
+  text-align: center;
+  font-weight: bold;
+  /* justify-content: center; */
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --cell-size: 100px;
+  /* this limits the size of the xs and os to fit the size of the cell. Multiply by .9 
+  because you want it to be 90% of the cell size = slightly smaller */
+  --mark-size: calc(var(--cell-size) * 0.9);
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #b784a7, #8052ec);
+}
+
+.game_container {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  grid-template-columns: repeat(3, auto);
+}
+
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  /* background-color: black; */
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+/* remove grid from first three elements */
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+  border-top: none;
+}
+
+.cell:nth-child(3n + 1) {
+  border-left: none;
+}
+
+.cell:nth-child(3n + 3) {
+  border-right: none;
+}
+
+.cell:last-child,
+.cell:nth-child(8),
+.cell:nth-child(7) {
+  border-bottom: none;
+}
+
+.cell.x,
+.cell.circle {
+  cursor: not-allowed;
+}
+
+.cell.x::before,
+.cell.x::after,
+.cell.circle::before {
+  background-color: black;
+}
+
+.cell.circle::after {
+  background-color: black;
+}
+
+.game_container.x .cell:not(.x):not(.circle):hover::before,
+.game_container.x .cell:not(.x):not(.circle):hover::after,
+.game_container.circle .cell:not(.x):not(.circle):hover:before {
+  background-color: lightgrey;
+}
+
+/* instead of simply putting x, have CSS do it */
+.cell.x::before,
+.cell.x::after,
+.game_container.x .cell:not(.x):not(.circle):hover::before,
+.game_container.x .cell:not(.x):not(.circle):hover::after {
+  content: "";
+  position: absolute;
+  width: calc(var(--mark-size) * 0.15);
+  height: var(--mark-size);
+  /* background-color: black; */
+}
+
+.cell.x::before,
+.game_container.x .cell:not(.x):not(.circle):hover::before {
+  transform: rotate(45deg);
+}
+
+.cell.x::after,
+.game_container.x .cell:not(.x):not(.circle):hover::after {
+  transform: rotate(-45deg);
+}
+
+/* insteady of simply putting an o, have CSS do it */
+.cell.circle::before,
+.cell.circle::after,
+.game_container.circle .cell:not(.x):not(.circle):hover::before,
+.game_container.circle .cell:not(.x):not(.circle):hover::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  /* width: calc(var(--mark-size) * 0.15); */
+  /* height: var(--mark-size); */
+  /* background-color: black; */
+}
+
+.cell.circle::before,
+.game_container.circle .cell:not(.x):not(.circle):hover::before {
+  /* transform: rotate(45deg); */
+  width: var(--mark-size);
+  height: var(--mark-size);
+}
+
+.cell.circle::after,
+.game_container.circle .cell:not(.x):not(.circle):hover::after {
+  width: calc(var(--mark-size) * 0.7);
+  height: calc(var(--mark-size) * 0.7);
+  background: linear-gradient(135deg, #b784a7, #8052ec);
+}
+/* 
+.winning-message {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba (0, 0, 0, 0.9);
+} */
+
+#reset_button:hover {
+  border: solid black;
+  transition-duration: 0.4s;
+  padding: 15px 32px;
+  display: inline-block;
+}
